@@ -41,6 +41,7 @@ class ExtendedRenderWrap extends RenderBox
   /// runs are aligned to the start.
 
   ExtendedRenderWrap({
+    this.onRowBuildChanged,
     List<RenderBox>? children,
     Axis direction = Axis.horizontal,
     WrapAlignment alignment = WrapAlignment.start,
@@ -78,6 +79,8 @@ class ExtendedRenderWrap extends RenderBox
   /// children are placed in a new run vertically adjacent to the previous run.
   Axis get direction => _direction;
   Axis _direction;
+
+  final Function(bool hasFold, int showCount)? onRowBuildChanged;
 
   set direction(Axis value) {
     if (_direction == value) return;
@@ -819,6 +822,7 @@ class ExtendedRenderWrap extends RenderBox
       else
         crossAxisOffset += runCrossAxisExtent + runBetweenSpace;
     }
+    onRowBuildChanged?.call(_hasVisualOverflow, runCount);
   }
 
   @override

@@ -21,6 +21,7 @@ class ExtendedWrap extends MultiChildRenderObjectWidget {
   final int minLines;
 
   final Widget? overflowWidget;
+  final Function(bool hasFold, int showCount)? onRowBuildChanged;
 
   ExtendedWrap({
     Key? key,
@@ -36,6 +37,7 @@ class ExtendedWrap extends MultiChildRenderObjectWidget {
     this.maxLines = 1,
     this.minLines = 1,
     this.overflowWidget,
+    this.onRowBuildChanged,
     List<Widget> children = const <Widget>[],
   })  : assert(maxLines >= 1),
         assert(minLines >= 1 && minLines <= maxLines),
@@ -184,6 +186,7 @@ class ExtendedWrap extends MultiChildRenderObjectWidget {
   @override
   ExtendedRenderWrap createRenderObject(BuildContext context) {
     return ExtendedRenderWrap(
+        onRowBuildChanged: onRowBuildChanged,
         direction: direction,
         alignment: alignment,
         spacing: spacing,
